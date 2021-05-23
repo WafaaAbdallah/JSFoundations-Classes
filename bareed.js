@@ -43,12 +43,15 @@ class Point {
  **********************************************************/
 class Wallet {
   // implement Wallet!
-  constructor(money = 0) {}
+  constructor(money = 0) {
+    this.money = money;
+  }
 
-  credit = amount => {};
+  credit = amount => {this.money = amount + this.money};
 
-  debit = amount => {};
+  debit = amount => {this.money = amount - this.money};
 }
+
 
 /**********************************************************
  * Person: defines a person with a name (and feelings)
@@ -63,7 +66,14 @@ class Wallet {
  **********************************************************/
 class Person {
   // implement Person!
+  constructor(name,x,y,wallet = 0){
+    this.name =name
+    this.location = new Point(x,y)
+    this.wallet = new Wallet(wallet)
+  }
+  moveTo = (point)=>(this.location = Point)
 }
+let p= new Person("Amal", 10,30,100);
 
 /**********************************************************
  * Vendor: defines a vendor
@@ -80,7 +90,17 @@ class Person {
  *
  * new vendor = new Vendor(name, x, y);
  **********************************************************/
-class Vendor {
+class Vendor extends Person {
+  constructor (name,x,y,wallet,range = 5, price =1){
+    super(name,x,y,wallet)
+    this.range= range;
+    this.price=price;
+    
+    sellTo= (customer,numberOfIcecream) => {
+      this.moveTo(customer.location )
+      wallet.credit (numberOfIcecream*price)
+    }
+  }
   // implement Vendor!
 }
 
@@ -101,6 +121,15 @@ class Vendor {
  * new customer = new Customer(name, x, y);
  **********************************************************/
 class Customer {
+  constructor(name,x,y,wallet=10)
+  super(name,x,y,wallet);
+  this.wallet= new wallet(wallet);
+
+isInRange =(vendor)=>this.location.distanceTo(vendor.location)- vendor.range
+haveEnoughMoney =(vendor,numberOfIcecream)=>{ 
+  if isInRange(vendor) && this.haveEnoughMoney(vendor,numberOfIcecream)
+  vendor.sellTo(this.numberOfIcecream)
+}
   // implement Customer!
 }
 
